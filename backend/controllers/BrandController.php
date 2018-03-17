@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\Brand;
 use yii\data\Pagination;
+use yii\helpers\Json;
 use yii\web\UploadedFile;
 
 class BrandController extends \yii\web\Controller
@@ -17,7 +18,7 @@ class BrandController extends \yii\web\Controller
         //创建一个分页对象
         $page = new Pagination([
             //注：pagesize必须小于总数据条数
-           'pageSize' => 1,
+           'pageSize' => 3,
             'totalCount' => $count,
         ]);
         $brands=$query->offset($page->offset)->limit($page->limit)->all();
@@ -36,21 +37,21 @@ class BrandController extends \yii\web\Controller
         if (\Yii::$app->request->isPost) {
             //数据绑定
             $model->load(\Yii::$app->request->post());
-            //上传文件
-            $model->img=UploadedFile::getInstance($model,'img');
-            $imgPath="";
-            if($model->img!==null){
-                //拼路径
-                $imgPath = "images/".time().".".$model->img->extension;
-                //移动临时文件
-                $model->img->saveAs($imgPath,false);
-
-            }
+          //上传文件
+//            $model->img=UploadedFile::getInstance($model,'img');
+//            $imgPath="";
+//            if($model->img!==null){
+//                //拼路径
+//                $imgPath = "images/".time().".".$model->img->extension;
+//                //移动临时文件
+//                $model->img->saveAs($imgPath,false);
+//
+//            }
 
             //后台验证
             if ($model->validate()) {
                 //吧图片路径赋值给logo
-                $model->logo=$imgPath;
+//                $model->logo=$imgPath;
                 //保存数据
                 if ($model->save()) {
                     //登录成功提示
@@ -117,8 +118,43 @@ class BrandController extends \yii\web\Controller
      * @return \yii\web\Response
      */
     public function actionDel($id){
-        if (Brand::findOne($id)->delete()) {
-            return $this->redirect(['index']);
+    if (Brand::findOne($id)->delete()) {
+        return $this->redirect(['index']);
+    }
+}
+
+    /**文件上传到本地
+     * @return string
+     */
+    public function actionUpload(){
+        //通过name值得到上传对象
+        $fileObj = UploadedFile::getInstanceByName('file');
+//        var_dump($fileObj);exit;
+        //移动临时文件
+        if ($fileObj !==null) {
+            //拼图片路径
+            $filePath= "images/".time().".".$fileObj->extension;
+//            var_dump($filePath);exit;
+            if ($fileObj->saveAs($filePath,false)) {
+                // 正确时， 其中 attachment 指的是保存在数据库中的路径，url 是该图片在web可访问的地址
+//                {"code": 0, "url": "http://domain/图片地址", "attachment": "图片地址"}
+                $correct =[
+                    'code'=>0,
+                    'url'=>"/".$filePath,
+                    'attachment'=>$filePath
+                ];
+                return Json::encode($correct);
+
+            }else{
+
+                // 错误时
+//                {"code": 1, "msg": "error"}
+                $result = [
+                    'code'=>1,
+                    'msg'=>"error"
+                ];
+                return Json::encode($result);
+            }
         }
     }
 

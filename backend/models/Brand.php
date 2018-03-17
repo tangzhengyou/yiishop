@@ -16,7 +16,7 @@ use Yii;
  */
 class Brand extends \yii\db\ActiveRecord
 {
-    public $img;
+//    public $img;
     public static $status=[0=>'禁用',1=>'激活'];
 
 
@@ -26,10 +26,10 @@ class Brand extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name','sort','status'], 'required'],
+            [['name','sort','status','logo'], 'required'],
             [['sort', 'status'], 'integer'],
             [['intro'], 'safe'],
-            [['img'],'image','skipOnEmpty' =>false,'extensions' => 'jpg,png,gif']
+//            [['img'],'image','skipOnEmpty' =>false,'extensions' => 'jpg,png,gif']
 
         ];
     }

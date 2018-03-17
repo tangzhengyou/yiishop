@@ -1,24 +1,25 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Brand */
+/* @var $model backend\models\ArticleCategory */
 /* @var $form ActiveForm */
 ?>
-<div class="brand-add">
+<div class="article-category-add">
 
     <?php $form = ActiveForm::begin(); ?>
 
-        <?= $form->field($model, 'logo')->widget(\manks\FileInput::className(),[])?>
         <?= $form->field($model, 'name') ?>
         <?= $form->field($model, 'sort') ?>
-        <?= $form->field($model, 'status')->inline()->radioList(['禁用','激活'])?>
-        <?= $form->field($model, 'intro')->textarea() ?>
+        <?= $form->field($model, 'status')->radioList(['禁用','激活']) ?>
+        <?= $form->field($model, 'is_help') ->radioList(['否','是'])?>
+        <?= $form->field($model, 'intro') ->textarea()?>
+    
         <div class="form-group">
             <?= Html::submitButton('提交', ['class' => 'btn btn-primary']) ?>
         </div>
     <?php ActiveForm::end(); ?>
 
-</div><!-- brand-add -->
+</div><!-- article-category-add -->

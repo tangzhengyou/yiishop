@@ -16,7 +16,7 @@ class m180315_084418_create_brand_table extends Migration
             'id' => $this->primaryKey(),
             'name'=> $this->string()->notNull()->comment('商品名'),
             'logo'=> $this->string()->notNull()->comment('商品logo'),
-            'sort'=> $this->integer()->notNull()->defaultValue(10)->comment('排序'),
+            'sort'=> $this->integer()->notNull()->defaultValue(100)->comment('排序'),
             'status'=> $this->smallInteger()->notNull()->defaultValue(1)->comment('状态'),
             'intro'=> $this->text()->comment('简介')
 
