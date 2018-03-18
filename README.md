@@ -23,38 +23,63 @@ Documentation is at [docs/guide/README.md](docs/guide/README.md).
 
 DIRECTORY STRUCTURE
 -------------------
+**day1**
+1.主要功能模块
+开发环境	Window
+开发工具	Phpstorm+PHP7.0+GIT+Apache
+相关技术	Yii2.0+CDN+jQuery+sphinx
+**品牌管理**
+系统后台设计：后台admin.shop.com 对url地址美化
+*1.品牌概念模块*
+ *1.1.需求*
+   品牌管理功能涉及品牌的列表展示、品牌添加、修改、删除功能。
+   品牌需要保存缩略图和简介。
+   品牌删除使用逻辑删除。
+ *1.2.要点及难点*
+   1)删除使用逻辑删除,只改变status属性,不删除记录
+   2)使用webuploader插件,提升用户体验
+   3)使用composer下载和安装webuploader
+   
+   
+   
+   
+   
+**day2**
+*1.文章管理模块*
+ 1.1.需求
+     1)文章的增删改
+     2)文章分类的增删改
+ 1.2.设计要点、难点及解决方案
+     1)文章模型和文章详情模型建立一对一的关系
+     2)富文本框添加内容
+     3)文章分类不能重复,通过添加验证规则unique解决
+     4)文章垂直分表,创建表单使用文章模型和文章详情模型
+ 
 
-```
-common
-    config/              contains shared configurations
-    mail/                contains view files for e-mails
-    models/              contains model classes used in both backend and frontend
-    tests/               contains tests for common classes    
-console
-    config/              contains console configurations
-    controllers/         contains console controllers (commands)
-    migrations/          contains database migrations
-    models/              contains console-specific model classes
-    runtime/             contains files generated during runtime
-backend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains backend configurations
-    controllers/         contains Web controller classes
-    models/              contains backend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for backend application    
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-frontend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains frontend configurations
-    controllers/         contains Web controller classes
-    models/              contains frontend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for frontend application
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-    widgets/             contains frontend widgets
-vendor/                  contains dependent 3rd-party packages
-environments/            contains environment-based overrides
-```
+
+**day3**
+*1.商品分类模块*
+1.1需求
+1.商品分类的增删改查
+2.商品分类支持无限级分类
+3.方便直观的显示分类层级
+4.分类层级允许修改
+
+*2.设计要点*
+    1)使用了嵌套集合模型
+    2）使用Ztree插件显示分类层级
+    3)设计数据表
+*3.流程*
+   1）安装nested set插件
+   2）配置NestedSetBehavior
+   3)下载ztree插件 
+   https://packagist.org/packages/liyuze/yii2-ztree
+   composer require liyuze/yii2-ztree 
+   4）下载treegrid插件 实现首页列表展示
+   https://packagist.org/packages/leandrogehlen/yii2-treegrid
+   composer require leandrogehlen/yii2-treegrid
+*4.难点*
+  1）nestedset行为的配置和使用
+  2）ztree插件的使用
+  3）treegrid插件的使用，首页删改，插件的操作不怎么会
+  
