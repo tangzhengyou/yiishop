@@ -10,6 +10,14 @@ use yii\helpers\ArrayHelper;
 
 class ArticleController extends \yii\web\Controller
 {
+    public function actions()
+    {
+        return [
+            'upload' => [
+                'class' => 'kucha\ueditor\UEditorAction',
+            ]
+        ];
+    }
     public function actionIndex()
     {
         //获取所有数据
@@ -132,6 +140,10 @@ class ArticleController extends \yii\web\Controller
         }
     }
 
+    /**判断状态
+     * @param $id
+     * @return \yii\web\Response
+     */
     public function actionStatus($id){
         //找到对应状态的id
         $model = Article::findOne($id);

@@ -1,11 +1,11 @@
 <?php
 /* @var $this yii\web\View */
 ?>
-<h1>商品类别列表</h1>
+
+<h3>商品类别列表</h3>
 
 <p>
     <?=\yii\bootstrap\Html::a('添加',['add'],['class'=>'btn btn-info glyphicon glyphicon-plus'])?>
-    <table>
     <?= leandrogehlen\treegrid\TreeGrid::widget([
         'dataProvider' => $dataProvider,
         'keyColumnName' => 'id',
@@ -18,6 +18,8 @@
             'name',
             'id',
             'parent_id',
+
+
             ['class' => 'yii\grid\ActionColumn']
         ]
     ]); ?>

@@ -22,6 +22,9 @@ class CategoryController extends \yii\web\Controller
         return $this->render('index',compact("dataProvider"));
     }
 
+    /**商品分类添加
+     * @return string|\yii\web\Response
+     */
     public function actionAdd(){
         $cate = new Category();
         //查询所有分类
@@ -73,8 +76,13 @@ class CategoryController extends \yii\web\Controller
 
 
     }
-    public function actionEdit($id ,$parent_id){
-        $cate = Category::findOne($id && $parent_id);
+
+    /**商品分类修改
+     * @param $id
+     * @return string|\yii\web\Response
+     */
+    public function actionUpdate($id){
+        $cate = Category::findOne($id);
         //查询所有分类
         $cates = Category::find()->asArray()->all();
         $cates[]=['id'=>0,'name'=>'一级分类','parent_id'=>0];
@@ -124,6 +132,13 @@ class CategoryController extends \yii\web\Controller
 
 
     }
+
+    public function actionDelete($id){
+        if (Category::findOne($id)->delete()){
+            return $this->redirect(['index']);
+        }
+    }
+
 
 
 }
