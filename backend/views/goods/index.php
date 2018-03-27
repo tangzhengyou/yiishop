@@ -53,11 +53,11 @@
             <td><?=$good->market_price?></td>
             <td><?=$good->shop_price?></td>
             <td> <?php
-                if ($good->status){
-                    echo \yii\bootstrap\Html::a("",['status','id'=>$good->id],['class'=>'glyphicon glyphicon-ok']);
+                if ($good->status==1){
+                    echo \yii\bootstrap\Html::a("",['status','id'=>$good->id],['class'=>'上架']);
 
                 }else{
-                    echo \yii\bootstrap\Html::a("",['status','id'=>$good->id],['class'=>'glyphicon glyphicon-remove']);
+                    echo \yii\bootstrap\Html::a("",['status','id'=>$good->id],['class'=>'下架']);
                 }
 
                 ?></td>

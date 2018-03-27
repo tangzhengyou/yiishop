@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\AuthItem;
 use Behat\Gherkin\Loader\YamlFileLoader;
+use yii\data\Pagination;
 use yii\rbac\Permission;
 
 class PermissionController extends \yii\web\Controller
@@ -13,12 +14,24 @@ class PermissionController extends \yii\web\Controller
         /**
          * 权限列表
          */
+
         //1)创建auth对象
         $auth = \Yii::$app->authManager;
         //2)找到所有权限
         $pers = $auth->getPermissions();
+        //获取所有数据
+//        $query = Permission::find();
+        //数据的总条数 每页显示多少条 当前页
+//        $count = $pers->count();
+//        //创建一个分页对象
+//        $page = new Pagination([
+//            //注：pagesize必须小于总数据条数
+//            'pageSize' => 3,
+//            'totalCount' => $count,
+//        ]);
+//        $pers=$pers->offset($page->offset)->limit($page->limit)->all();
         //var_dump($pers);exit;
-        return $this->render('index',compact('pers'));
+        return $this->render('index',compact('pers','page'));
     }
 
     /**权限添加

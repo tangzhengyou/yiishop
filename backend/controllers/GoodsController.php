@@ -227,7 +227,7 @@ class GoodsController extends \yii\web\Controller
         }
         //从数据库中找出当前商品对应的所有图片
         $images = GoodsGallery::find()->where(['goods_id'=>$id])->asArray()->all();
-         var_dump($images);exit;
+//         var_dump($images);exit;
         //把二维数组转成指定的一维数组
         $images = array_column($images,'path');
         $model->images = $images;
@@ -241,22 +241,4 @@ class GoodsController extends \yii\web\Controller
         }
     }
 
-    /**判断状态
-     * @param $id
-     * @return \yii\web\Response
-     */
-    public function actionStatus($id){
-        //找到对应状态的id
-        $model = Goods::findOne($id);
-        //判断
-        if ($model->status == 1){
-            $model->status=0;
-            $model->save();
-            return $this->redirect(['index']);
-        }else{
-            $model->status=1;
-            $model->save();
-            return $this->redirect(['index']);
-        }
-    }
 }

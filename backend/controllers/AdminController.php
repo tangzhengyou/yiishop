@@ -180,8 +180,6 @@ class AdminController extends \yii\web\Controller
       //把用户指派给角色
       $auth->assign($role,$id);
   }
-  public function actionCheck(){
-      \Yii::$app->user->can('goods/add');
-  }
+
 
 }

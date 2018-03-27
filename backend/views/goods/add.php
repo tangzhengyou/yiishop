@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'category_id')->dropDownList($catesArr,['prompt'=>'请选择商品类别'])?>
         <?= $form->field($model, 'market_price') ?>
         <?= $form->field($model, 'shop_price') ?>
-        <?= $form->field($model, 'status')->radioList(['下架','上架'],['value'=>1])?>
+        <?= $form->field($model, 'status')->radioList(['0'=>'下架','1'=>'上架'],['value'=>1])?>
         <?= $form->field($model, 'stock') ?>
         <?= $form->field($model, 'sn') ?>
 
