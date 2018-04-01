@@ -48,7 +48,12 @@
             <td><?=$good->name?></td>
             <td><?=$good->sort?></td>
             <td><?=$good->brand_id?></td>
-            <td><img src="/<?=$good->logo?>" height="40"></td>
+            <td><?php
+                $imgPath=strpos($good->logo,"ttp://")?$good->logo:"/".$good->logo;
+                echo \yii\bootstrap\Html::img($imgPath,['height'=>40]);
+
+
+                ?></td>
             <td><?=$good->category_id?></td>
             <td><?=$good->market_price?></td>
             <td><?=$good->shop_price?></td>

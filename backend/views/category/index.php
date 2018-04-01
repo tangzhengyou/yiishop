@@ -20,7 +20,7 @@
             'parent_id',
 
 
-            ['class' => 'yii\grid\ActionColumn']
+            ['class' => \backend\components\ActionColumn::className()]
         ]
     ]); ?>
 

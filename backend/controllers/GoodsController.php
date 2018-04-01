@@ -16,40 +16,46 @@ class GoodsController extends \yii\web\Controller
     public function behaviors()
     {
         return [
-          'rbac'=>[
-              'class'=>RbacFilter::className(),
-          ]
+            'rbac' => [
+                'class' => RbacFilter::className(),
+            ]
         ];
     }
+
 //
     public function actions()
     {
         return [
             'upload' => [
                 'class' => 'kucha\ueditor\UEditorAction',
+                'config' => [
+                    "imageUrlPrefix" => "http://admin.shop.com",//图片访问路径前缀
+                ]
             ]
+
         ];
     }
+
     public function actionIndex()
     {
         //获取所有数据
         $query = Goods::find();
         //
-        $minPrice =\Yii::$app->request->get('minPrice');
-        $maxPrice =\Yii::$app->request->get('maxPrice');
-        $keyword =\Yii::$app->request->get('keyword');
-        $status=\Yii::$app->request->get('status');
-        if($minPrice){
+        $minPrice = \Yii::$app->request->get('minPrice');
+        $maxPrice = \Yii::$app->request->get('maxPrice');
+        $keyword = \Yii::$app->request->get('keyword');
+        $status = \Yii::$app->request->get('status');
+        if ($minPrice) {
             $query->andWhere("shop_price>={$minPrice}");
         }
-        if($maxPrice){
+        if ($maxPrice) {
             $query->andWhere("shop_price<={$maxPrice}");
         }
-        if($keyword !==""){
+        if ($keyword !== "") {
             $query->andWhere("name like '%{$keyword}%' or sn like '%{$keyword}%'");
         }
-        if($status==="0" or $status==="1"){
-            $query->andWhere(['status'=>$status]);
+        if ($status === "0" or $status === "1") {
+            $query->andWhere(['status' => $status]);
         }
 
 
@@ -75,9 +81,9 @@ class GoodsController extends \yii\web\Controller
         $intro = new GoodsIntro();
 
         $brands = Brand::find()->all();
-        $brandsArr= ArrayHelper::map($brands,'id','name');
+        $brandsArr = ArrayHelper::map($brands, 'id', 'name');
         $cates = Category::find()->all();
-        $catesArr= ArrayHelper::map($cates,'id','name');
+        $catesArr = ArrayHelper::map($cates, 'id', 'name');
 
         //判断是否post方式提交
         if (\Yii::$app->request->isPost) {
@@ -87,24 +93,24 @@ class GoodsController extends \yii\web\Controller
             //数据绑定intro
             $intro->load(\Yii::$app->request->post());
             //后台验证
-            if ($model->validate() && $intro->validate() ) {
+            if ($model->validate() && $intro->validate()) {
 
-                 //var_dump($model->images);exit();
+                //var_dump($model->images);exit();
 
                 //判断货号（sn）是否有值
                 if (!$model->sn) {
-                    $dayTime =strtotime( date('Ymd'));
+                    $dayTime = strtotime(date('Ymd'));
 
-                     //找出当前商品数量
-                    $count = Goods::find()->where(['>','create_time',$dayTime])->count();
-                    $count +=1;
-                    $countStr="0000".$count;
-                    $countStr=substr($countStr,-5);
+                    //找出当前商品数量
+                    $count = Goods::find()->where(['>', 'create_time', $dayTime])->count();
+                    $count += 1;
+                    $countStr = "0000" . $count;
+                    $countStr = substr($countStr, -5);
 
 
-                    $model->sn=date('Ymd').$countStr;
+                    $model->sn = date('Ymd') . $countStr;
 
-                }else{
+                } else {
                     //TODO
 
                 }
@@ -117,14 +123,14 @@ class GoodsController extends \yii\web\Controller
                     //多图操作 循环images
                     foreach ($model->images as $image) {
 
-                        $gallery =new GoodsGallery();
+                        $gallery = new GoodsGallery();
                         //赋值
-                        $gallery->goods_id=$model->id;
-                        $gallery->path=$image;
+                        $gallery->goods_id = $model->id;
+                        $gallery->path = $image;
                         //保存图片
                         $gallery->save();
                         //添加成功提示
-                        \Yii::$app->session->setFlash('success',"商品添加成功");
+                        \Yii::$app->session->setFlash('success', "商品添加成功");
                         return $this->redirect(['index']);
 
 
@@ -138,26 +144,28 @@ class GoodsController extends \yii\web\Controller
 
             } else {
                 //打印错误信息
-             var_dump($model->errors);
-             var_dump($intro->errors);exit;
+                var_dump($model->errors);
+                var_dump($intro->errors);
+                exit;
             }
         }
 
-        return $this->render('add', compact('model','brandsArr','catesArr','intro'));
+        return $this->render('add', compact('model', 'brandsArr', 'catesArr', 'intro'));
 
 
     }
+
     public function actionEdit($id)
     {
         //创建商品模型对象
         $model = Goods::findOne($id);
         //创建详情表模型对象
-        $intro = GoodsIntro::findOne(['goods_id'=>$id]);
+        $intro = GoodsIntro::findOne(['goods_id' => $id]);
 
         $brands = Brand::find()->all();
-        $brandsArr = ArrayHelper::map($brands,'id','name');
+        $brandsArr = ArrayHelper::map($brands, 'id', 'name');
         $cates = Category::find()->all();
-        $catesArr= ArrayHelper::map($cates,'id','name');
+        $catesArr = ArrayHelper::map($cates, 'id', 'name');
 
         //判断是否post方式提交
         if (\Yii::$app->request->isPost) {
@@ -167,24 +175,24 @@ class GoodsController extends \yii\web\Controller
             //数据绑定intro
             $intro->load(\Yii::$app->request->post());
             //后台验证
-            if ($model->validate() && $intro->validate() ) {
+            if ($model->validate() && $intro->validate()) {
 
-                 //var_dump($model->images);exit();
+                //var_dump($model->images);exit();
 
                 //判断货号（sn）是否有值
                 if (!$model->sn) {
-                    $dayTime =strtotime( date('Ymd'));
+                    $dayTime = strtotime(date('Ymd'));
 
-                     //找出当前商品数量
-                    $count = Goods::find()->where(['>','create_time',$dayTime])->count();
-                    $count +=1;
-                    $countStr="0000".$count;
-                    $countStr=substr($countStr,-5);
+                    //找出当前商品数量
+                    $count = Goods::find()->where(['>', 'create_time', $dayTime])->count();
+                    $count += 1;
+                    $countStr = "0000" . $count;
+                    $countStr = substr($countStr, -5);
 
 
-                    $model->sn=date('Ymd').$countStr;
+                    $model->sn = date('Ymd') . $countStr;
 
-                }else{
+                } else {
                     //TODO
 
                 }
@@ -196,47 +204,47 @@ class GoodsController extends \yii\web\Controller
 
                     //多图操作
                     //编辑之前一定要删除当前商品所对应的所有图片
-                    GoodsGallery::deleteAll(['goods_id'=>$id]);
+                    GoodsGallery::deleteAll(['goods_id' => $id]);
                     // 循环images
                     foreach ($model->images as $image) {
 
-                        $gallery =new GoodsGallery();
+                        $gallery = new GoodsGallery();
                         //赋值
-                        $gallery->goods_id=$model->id;
-                        $gallery->path=$image;
+                        $gallery->goods_id = $model->id;
+                        $gallery->path = $image;
                         //保存图片
                         $gallery->save();
-                        //添加成功提示
-                        \Yii::$app->session->setFlash('success',"商品添加成功");
-                        return $this->redirect(['index']);
 
 
                     }
 
                     //添加成功提示
-                    \Yii::$app->session->setFlash('success', "添加成功");
+                    \Yii::$app->session->setFlash('success', "商品添加成功");
                     //添加成功跳转
                     return $this->redirect(['index']);
                 }
 
             } else {
                 //打印错误信息
-             var_dump($model->errors);
-             var_dump($intro->errors);exit;
+                var_dump($model->errors);
+                var_dump($intro->errors);
+                exit;
             }
         }
         //从数据库中找出当前商品对应的所有图片
-        $images = GoodsGallery::find()->where(['goods_id'=>$id])->asArray()->all();
+        $images = GoodsGallery::find()->where(['goods_id' => $id])->asArray()->all();
 //         var_dump($images);exit;
         //把二维数组转成指定的一维数组
-        $images = array_column($images,'path');
+        $images = array_column($images, 'path');
         $model->images = $images;
-        return $this->render('add', compact('model','brandsArr','catesArr','intro'));
+        return $this->render('add', compact('model', 'brandsArr', 'catesArr', 'intro'));
 
 
     }
-    public function actionDel($id){
-        if (Goods::findOne($id)->delete() && GoodsIntro::findOne(['goods_id'=>$id])->delete() && GoodsGallery::findOne(['goods_id'=>$id])->delete()){
+
+    public function actionDel($id)
+    {
+        if (Goods::findOne($id)->delete() && GoodsIntro::findOne(['goods_id' => $id])->delete() && GoodsGallery::findOne(['goods_id' => $id])->delete()) {
             return $this->redirect(['index']);
         }
     }

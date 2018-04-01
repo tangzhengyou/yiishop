@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3792a4ff021a2418ae0de77b810bd306",
+    "content-hash": "0227cef174f8343d5d628080d6b8b3a9",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -470,6 +470,47 @@
                 "zikula"
             ],
             "time": "2017-12-29T09:13:20+00:00"
+        },
+        {
+            "name": "crazyfd/yii2-qiniu",
+            "version": "1.03",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/crazyfd/upload.git",
+                "reference": "0150d40264ba6e31928615a248524cda9e5c3ad0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/crazyfd/upload/0150d40264ba6e31928615a248524cda9e5c3ad0.zip",
+                "reference": "0150d40264ba6e31928615a248524cda9e5c3ad0",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "crazyfd\\qiniu\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "crazyfd",
+                    "email": "crazyfd@qq.com"
+                }
+            ],
+            "description": "yii2上传到七牛云存储",
+            "keywords": [
+                "qiniu",
+                "upload",
+                "yii"
+            ],
+            "time": "2018-01-03T03:28:03+00:00"
         },
         {
             "name": "creocoder/yii2-nested-sets",
