@@ -186,7 +186,7 @@
 		</div>
 
 		<div class="fillin_ft">
-			<a href="javascript:;" id="sub"><span>提交订单</span></a>
+			<a href="<?=\yii\helpers\Url::to(['order/putin'])?>" id="sub"><span>提交订单</span></a>
 			<p>应付总额：<strong>￥<span class="all_price"><?=$shopPrice+$deliverys[0]->price?></span>元</strong></p>
 			
 		</div>
@@ -236,6 +236,12 @@
                 //提交数据
                 $.post('/order/index',$("form").serialize(),function (data) {
                     console.dir(data);
+                    if(data.status==1){
+                        window.location.href="/order/ok?id="+data.id;
+                    }else{
+                        alert(data.msg);
+                    }
+
                 },'json');
             });
         });
